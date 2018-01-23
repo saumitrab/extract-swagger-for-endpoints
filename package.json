@@ -1,0 +1,29 @@
+{
+  "name": "extract-swagger-for-endpoints",
+  "version": "1.0.0",
+  "description": "Extract swagger/openapi spec with only required endpoint(s).",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "Saumitra Bhanage <bhanage.saumitra@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "js-yaml": "^3.11.0",
+    "prettier": "^1.12.1",
+    "swagger-parser": "^4.0.2"
+  },
+  "devDependencies": {
+    "assertive": "^3.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-groupon": "^5.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-prettier": "^2.2.0",
+    "mocha": "^5.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/saumitrab/extract-swagger-for-endpoints"
+  }
+}

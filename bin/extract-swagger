@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+"use strict";
+
+/* eslint-disable no-console */
+
+const yaml = require("js-yaml");
+const fs = require("fs");
+const program = require("commander");
+const util = require("util");
+
+const extractEndpoints = require("../lib/extract-endpoints");
+
+program
+  .version("0.1.0")
+  .usage("[options] <endpoint> [<endpoint> ...]")
+  .option("-s, --src <sourcefile>", "Source swagger/openapi spec")
+  .option("-d, --dest <destfile>", "Generated swagger/openapi spec")
+  .option("-l, --list-paths")
+  .parse(process.argv);
+
+const sourceFile = program.src;
+const destFile = program.dest;
+
+let doc;
+try {
+  doc = yaml.safeLoad(fs.readFileSync(sourceFile, "utf8"));
+} catch (e) {
+  console.log(e);
+  process.exit();
+}
+
+if (program.listPaths) {
+  console.log(Object.keys(doc.paths));
+  process.exit();
+}
+
+const { limitPaths, limitDefinitions } = extractEndpoints(doc, program.args);
+doc.paths = limitPaths;
+doc.definitions = limitDefinitions;
+
+try {
+  fs.writeFileSync(destFile, yaml.safeDump(doc, { skipInvalid: true }));
+} catch (e) {
+  console.log(e);
+  process.exit();
+}
+
+module.exports = extractEndpoints;
