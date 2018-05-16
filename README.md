@@ -1,4 +1,4 @@
-Convert swagger schema to graphql types for given endpoints.
+Extract swagger/openapi spec with only required endpoint(s).
 
 ```
 # example use:
