@@ -30,7 +30,8 @@ try {
 }
 
 if (program.listPaths) {
-  console.log(Object.keys(doc.paths));
+  console.log(`List of endpoints defined in ${sourceFile}:`);
+  Object.keys(doc.paths).forEach(path => console.log(path));
   process.exit();
 }
 
