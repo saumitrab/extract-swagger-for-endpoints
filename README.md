@@ -9,4 +9,5 @@ Extract swagger/openapi spec with only required endpoint(s).
 ```
 
 TODO:
-1. Fetch swagger.yml from a url
+1. Fetch source yml from a url
+2. Add swagger schema verification step
