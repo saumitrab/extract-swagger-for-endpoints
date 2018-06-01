@@ -1,12 +1,12 @@
 {
   "name": "extract-swagger-for-endpoints",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extract swagger/openapi spec with only required endpoint(s).",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
   "author": "Saumitra Bhanage <bhanage.saumitra@gmail.com>",
-  "bin": "./bin/extract-swagger"
+  "bin": "./bin/extract-swagger",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.15.1",
