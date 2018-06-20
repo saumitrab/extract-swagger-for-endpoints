@@ -26,5 +26,6 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/saumitrab/extract-swagger-for-endpoints"
-  }
+  },
+  "keywords": ["swagger", "openapi", "endpoints"]
 }
