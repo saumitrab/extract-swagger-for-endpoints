@@ -1,29 +1,28 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
 
 /* eslint-disable no-console */
 
-const yaml = require("js-yaml");
-const fs = require("fs");
-const program = require("commander");
-const util = require("util");
+const yaml = require('js-yaml');
+const fs = require('fs');
+const program = require('commander');
 
-const extractEndpoints = require("../lib/extract-endpoints");
+const { extractSwagger, listEndpoints } = require('../');
 
 program
-  .version("0.1.0")
-  .usage("[options] <endpoint> [<endpoint> ...]")
-  .option("-s, --src <sourcefile>", "Source swagger/openapi spec")
-  .option("-d, --dest <destfile>", "Generated swagger/openapi spec")
-  .option("-l, --list-paths")
+  .version('0.1.0')
+  .usage('[options] <endpoint> [<endpoint> ...]')
+  .option('-s, --src <sourcefile>', 'Source swagger/openapi spec')
+  .option('-d, --dest <destfile>', 'Generated swagger/openapi spec')
+  .option('-l, --list-paths')
   .parse(process.argv);
 
 const sourceFile = program.src;
 const destFile = program.dest;
 
-let doc;
+let sourceDoc;
 try {
-  doc = yaml.safeLoad(fs.readFileSync(sourceFile, "utf8"));
+  sourceDoc = yaml.safeLoad(fs.readFileSync(sourceFile, 'utf8'));
 } catch (e) {
   console.log(e);
   process.exit();
@@ -31,19 +30,15 @@ try {
 
 if (program.listPaths) {
   console.log(`List of endpoints defined in ${sourceFile}:`);
-  Object.keys(doc.paths).forEach(path => console.log(path));
+  listEndpoints(sourceDoc).forEach(path => console.log(path));
   process.exit();
 }
 
-const { limitPaths, limitDefinitions } = extractEndpoints(doc, program.args);
-doc.paths = limitPaths;
-doc.definitions = limitDefinitions;
+const destDoc = extractSwagger(sourceDoc, program.args);
 
 try {
-  fs.writeFileSync(destFile, yaml.safeDump(doc, { skipInvalid: true }));
+  fs.writeFileSync(destFile, yaml.safeDump(destDoc, { skipInvalid: true }));
 } catch (e) {
   console.log(e);
   process.exit();
 }
-
-module.exports = extractEndpoints;

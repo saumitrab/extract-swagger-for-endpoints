@@ -1,29 +1,29 @@
-"use strict";
+'use strict';
 
-const extractEndpoints = require("../lib/extract-endpoints");
-const fs = require("fs");
-const path = require("path");
-const yaml = require("js-yaml");
-const assert = require("assertive");
+const extractEndpoints = require('../lib/extract-endpoints');
+const fs = require('fs');
+const path = require('path');
+const yaml = require('js-yaml');
+const assert = require('assertive');
 
-describe("Extract endpoints", function() {
+describe('Extract endpoints', () => {
   let doc, resp;
-  before(function() {
+  before(() => {
     try {
       doc = yaml.safeLoad(
-        fs.readFileSync(path.join(__dirname, "/fixtures/petstore.yml"), "utf-8")
+        fs.readFileSync(path.join(__dirname, '/fixtures/petstore.yml'), 'utf-8')
       );
     } catch (e) {
       throw e;
     }
 
-    resp = extractEndpoints(doc, ["/pet/findByStatus"]);
+    resp = extractEndpoints(doc, ['/pet/findByStatus']);
   });
-  it("matches stored schema", function() {
+  it('matches stored schema', () => {
     const expected = yaml.safeLoad(
       fs.readFileSync(
-        path.join(__dirname, "./fixtures/petstore-findByStatus.yml"),
-        "utf-8"
+        path.join(__dirname, './fixtures/petstore-findByStatus.yml'),
+        'utf-8'
       )
     );
     assert.deepEqual(expected.paths, resp.limitPaths);
